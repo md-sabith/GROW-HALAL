@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interest-Free Loan Finder</title>
+  <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="1.png">
+
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    p.note {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .searchBar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    .searchBar input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--muted);
+      width: 200px;
+    }
+
+    .searchBar button {
+      padding: 10px 15px;
+      background: var(--main);
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media(max-width:800px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:480px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+    }
+
+    .card .loc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      margin: 0 0 8px;
+    }
+
+    .card .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .card .btn {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .card .btn.main {
+      background: var(--main);
+      color: #fff;
+      border: 1px solid var(--main);
+    }
+
+    .card .btn.main:hover {
+      background: var(--bg);
+      color: var(--main);
+    }
+
+    .card .btn.alt {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--main);
+    }
+
+    .card .btn.alt:hover {
+      background: var(--main);
+      color: #fff;
+    }
+
+    /* Hover overlay */
+    .card .extra {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text);
+      padding: 15px;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: auto;
+      border-radius: var(--radius);
+      transition: 0.3s;
+      z-index: 5;
+    }
+
+    [data-theme="dark"] .card .extra {
+      background: rgba(8, 16, 25, 0.95);
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    .card:hover .extra {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scrollImages {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .scrollImages img {
+      height: 80px;
+      border-radius: 6px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 150px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+    <div class="brand">
+      <div class="logoAnim" aria-hidden>
+        <!-- animated bars logo -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 24">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#4FB7B3" />
+              <stop offset="1" stop-color="#18A39A" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="2" width="18" height="20" rx="3" fill="url(#g)">
+            <animate attributeName="y" values="2;0;2" dur="1.6s" repeatCount="indefinite" />
+          </rect>
+          <rect x="22" y="6" width="18" height="16" rx="3" fill="url(#g)">
+            <animate attributeName="y" values="6;2;6" dur="1.6s" begin="0.1s" repeatCount="indefinite" />
+          </rect>
+          <rect x="44" y="10" width="18" height="12" rx="3" fill="url(#g)">
+            <animate attributeName="y" values="10;4;10" dur="1.6s" begin="0.2s" repeatCount="indefinite" />
+          </rect>
+        </svg>
+      </div>
+      <div>
+        <div class="logoText">GROW HALAL</div>
+        <div class="muted" style="font-size:12px">Secure · Fast · Friendly</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px">
+      <nav>
+        <a href="home.html"><ion-icon name="home-outline"></ion-icon> Home</a>
+        <a href="about.html"><ion-icon name="information-circle-outline"></ion-icon> About</a>
+        <a href="contact.html"><ion-icon name="call-outline"></ion-icon> Contact</a>
+        <a href="services.html"><ion-icon name="card-outline"></ion-icon> Services</a>
+      </nav>
+
+      <button class="menuToggle" id="menuBtn"><ion-icon name="menu-outline"></ion-icon></button>
+
+      <div class="profile">
+        <button id="themeBtn" class="icon" title="toggle theme"
+          style="color: var(--main);border: 0;background: transparent;">
+          <ion-icon name="moon-outline" style="font-size: 23px;"></ion-icon>
+        </button>
+        <a href="profile.html"
+          style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)">
+          <img id="navProfilePic" src="https://via.placeholder.com/30" alt="Profile"
+            style="width:30px;height:30px;border-radius:50%;object-fit:cover">
+          <span class="muted" id="username">Guest</span>
+        </a>
+      </div>
+    </div>
+    </header>
+
+    <h1>Interest-Free Loan Finder</h1>
+    <p class="note">Find and apply for interest-free loans that align with your values and needs.</p>
+
+    <div class="searchBar">
+      <input type="text" id="bankNameSearch" placeholder="Bank Name">
+      <input type="text" id="locationSearch" placeholder="Location">
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="grid " id="bankGrid"></div>
+  </div>
+  <div class="mobile-nav" id="mobileNav" style="display:none">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="services.html">Services</a>
+      </div>
+
+  <script>
+    const banks = [
+      { name: "Al Noor Bank", location: "Dubai, UAE", desc: "Trusted bank offering flexible, interest-free financial solutions.", map: "https://maps.google.com/maps?q=Dubai&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.suhttps://www.linkedin.com/company/noor-bank?originalSubdomain=aekuk.com/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Sukuk Bank", location: "Riyadh, Saudi Arabia", desc: "Flexible Islamic banking services with interest-free products.", map: "https://maps.google.com/maps?q=Riyadh&t=&z=13&ie=UTF8&iwloc=&output=embed", link: "https://www.linkedin.com/company/noor-bank?originalSubdomain=ae",  imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Al Baraka Bank", location: "Kuwait City, Kuwait", desc: "Sharia-compliant banking solutions for individuals and businesses.", map: "https://maps.google.com/maps?q=Kuwait&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.albaraka.com/en/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Dar Al Aman Bank", location: "Cairo, Egypt", desc: "Interest-free loans and flexible accounts tailored to your needs.", map: "https://maps.google.com/maps?q=Cairo&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.daralamane.ma/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Tawfiq Bank", location: "Amman, Jordan", desc: "Modern banking with interest-free financing options.", map: "https://maps.google.com/maps?q=Amman&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://bankofjordan.com/en/our-team/board/mr-shaker-tawfiq-fakhouri-2", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Noor Islamic Bank", location: "Manama, Bahrain", desc: "Sharia-compliant accounts and loans for personal & business use.", map: "https://maps.google.com/maps?q=Manama&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://noorifs.com/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Baraka Finance", location: "Istanbul, Turkey", desc: "Interest-free financing for individuals and SMEs.", map: "https://maps.google.com/maps?q=Istanbul&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.barakaimpact.com/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Al Hilal Bank", location: "Muscat, Oman", desc: "Safe and flexible banking without interest.", map: "https://maps.google.com/maps?q=Muscat&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.alhilalbank.ae/en/personal/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Al Falah Bank", location: "Doha, Qatar", desc: "Providing interest-free loans and financial guidance.", map: "https://maps.google.com/maps?q=Doha&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.bankalfalah.com/about-bank-alfalah/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Islamic Finance Co", location: "Kuwait City, Kuwait", desc: "Sharia-compliant loans for personal growth.", map: "https://maps.google.com/maps?q=Kuwait&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.kfh.com/en/home/Personal.html", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Baraka Solutions", location: "Riyadh, Saudi Arabia", desc: "Interest-free personal and business accounts.", map: "https://maps.google.com/maps?q=Riyadh&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://barakasolutions.com/home/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] },
+      { name: "Dar Al Baraka", location: "Cairo, Egypt", desc: "Comprehensive interest-free banking services.", map: "https://maps.google.com/maps?q=Cairo&t=&z=13&ie=UTF8&iwloc=&output=embed",link: "https://www.albaraka.com.eg/", imgs: ["https://images.unsplash.com/photo-1561414927-6e0d4030d0e8?q=80&w=800", "https://images.unsplash.com/photo-1509912342-8c4cce3f8f9d?q=80&w=800", "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800"] }
+    ];
+
+    const grid = document.getElementById('bankGrid');
+
+    function renderBanks(list) {
+      grid.innerHTML = '';
+      list.forEach(b => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+      <h3>${b.name}</h3>
+      <div class="loc">📍 ${b.location}</div>
+      <p>${b.desc}</p>
+      <div class="actions">
+        <a class="btn alt" href="${b.link ? b.link : '#'}" target="_blank">More Info</a>
+      </div>
+      <div class="extra">
+        <h3>${b.name}</h3>
+        <div class="loc">📍 ${b.location}</div>
+        <p>${b.desc}</p>
+        <iframe src="${b.map}"></iframe>
+        <div class="scrollImages">${b.imgs.map(img => `<img src="${img}">`).join('')}</div>
+        <div class="actions">
+          <a class="btn alt" href="${b.link ? b.link : '#'}" target="_blank">More Info</a>
+        </div>
+      </div>
+    `;
+        grid.appendChild(card);
+      });
+    }
+
+    renderBanks(banks);
+
+    // Search functionality
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const name = document.getElementById('bankNameSearch').value.toLowerCase();
+      const loc = document.getElementById('locationSearch').value.toLowerCase();
+      const filtered = banks.filter(b => b.name.toLowerCase().includes(name) && b.location.toLowerCase().includes(loc));
+      renderBanks(filtered);
+    });
+
+    // mobile menu
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const el = document.getElementById('mobileNav');
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // theme toggle
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // load profile
+    const user = JSON.parse(localStorage.getItem('mybank_user') || 'null');
+    if (user) {
+      document.getElementById('username').textContent = user.name;
+      if (user.photo) document.getElementById('navProfilePic').src = user.photo;
+    }
+
+  </script>
+
+</body>
+
+</html>

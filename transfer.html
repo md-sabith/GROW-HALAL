@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transfer Money</title>
+<style>
+:root {--bg:#f5f5f5;--text:#071018;--card:#fff;--main:#4FB7B3;}
+.dark {--bg:#1e1e1e;--text:#f5f5f5;--card:#2a2a2a;--main:#4FB7B3;}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);text-align:center;padding:50px;transition:.3s;}
+.card{background:var(--card);padding:30px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+input{padding:12px;width:200px;border-radius:8px;border:1px solid #ccc;margin-bottom:15px;}
+button{padding:12px 20px;border:none;border-radius:8px;background:var(--main);color:#fff;font-weight:600;cursor:pointer;margin:5px;}
+button:hover{background:#18A39A;}
+#themeToggle{position:absolute;top:15px;right:15px;font-size:20px;background:none;border:none;cursor:pointer;color:var(--text);}
+</style>
+</head>
+<body>
+
+<button id="themeToggle"></button>
+
+<div class="card">
+  <h2>Transfer Money</h2>
+  <input type="text" id="recipient" placeholder="Recipient Name"><br>
+  <input type="number" id="sendAmount" placeholder="Amount to send"><br>
+  <button id="sendBtn">Send</button>
+  <button onclick="location.href='Wallet.html'">Home</button>
+</div>
+
+<script>
+// Theme toggle
+const themeToggle=document.getElementById('themeToggle');
+if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark');themeToggle.textContent='';}
+themeToggle.addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+  themeToggle.textContent=document.body.classList.contains('dark')?'':'';
+});
+
+// Wallet logic
+let balance = parseFloat(localStorage.getItem('wallet_balance')) || 0;
+let history = JSON.parse(localStorage.getItem('wallet_history')) || [];
+
+document.getElementById('sendBtn').addEventListener('click', ()=>{
+  const amount = parseFloat(document.getElementById('sendAmount').value);
+  const recipient = document.getElementById('recipient').value || 'Recipient';
+  if(amount>0 && amount<=balance){
+    balance -= amount;
+    localStorage.setItem('wallet_balance', balance);
+    history.push({type:`Sent to ${recipient}`, amount:`-$${amount.toFixed(2)}`});
+    localStorage.setItem('wallet_history', JSON.stringify(history));
+    alert(`Sent $${amount.toFixed(2)} to ${recipient}!`);
+    document.getElementById('sendAmount').value='';
+    document.getElementById('recipient').value='';
+  } else if(amount>balance){
+    alert('Insufficient balance!');
+  } else alert('Enter a valid amount');
+});
+</script>
+</body>
+</html>

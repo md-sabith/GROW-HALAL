@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet — View Balance</title>
+<style>
+:root {
+  --bg:#f5f5f5; --text:#071018; --card:#fff; --sub:#6b7280; --main:#4FB7B3;
+}
+.dark {
+  --bg:#1e1e1e; --text:#f5f5f5; --card:#2a2a2a; --sub:#cfcfcf; --main:#4FB7B3;
+}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);text-align:center;padding:40px;transition:.3s;}
+.card{background:var(--card);padding:30px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);margin-bottom:20px;}
+.card h1{margin:0;font-size:36px;color:var(--main);}
+.card p{margin:10px 0 0;color:var(--sub);font-size:16px;}
+button{padding:10px 18px;border:none;border-radius:8px;background:var(--main);color:#fff;font-weight:600;cursor:pointer;margin:5px;transition:.3s;}
+button:hover{background:#18A39A;}
+#transactions{text-align:left;}
+.transaction{background:var(--bg);border:1px solid #444;padding:10px;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between;}
+#themeToggle{position:absolute;top:15px;right:15px;font-size:20px;background:none;border:none;cursor:pointer;color:var(--text);}
+</style>
+</head>
+<body>
+
+
+
+<div class="card">
+  <h1 id="balance">$0.00</h1>
+  <p>Available Balance</p>
+  <button onclick="location.href='AddMoney.html'">Add Money</button>
+  <button onclick="location.href='Transfer.html'">Transfer Money</button>
+  <button onclick="location.href='home.html'">Home</button>
+</div>
+
+<div class="card">
+  <h2>Recent Transactions</h2>
+  <div id="transactions"></div>
+</div>
+
+<script>
+// Dark mode setup
+const themeToggle=document.getElementById('themeToggle');
+if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark');themeToggle.textContent='';}
+themeToggle.addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+  themeToggle.textContent=document.body.classList.contains('dark')?'':'';
+});
+
+// Wallet logic
+let balance = parseFloat(localStorage.getItem('wallet_balance')) || 0;
+const balanceEl = document.getElementById('balance');
+const transactionsEl = document.getElementById('transactions');
+
+function updateBalance(){
+  balance = parseFloat(localStorage.getItem('wallet_balance')) || 0;
+  balanceEl.textContent = '$' + balance.toFixed(2);
+}
+
+function loadTransactions(){
+  const history = JSON.parse(localStorage.getItem('wallet_history')) || [];
+  transactionsEl.innerHTML = '';
+  history.slice(-5).reverse().forEach(t=>{
+    const div = document.createElement('div');
+    div.className='transaction';
+    div.innerHTML = `<span>${t.type}</span><span>${t.amount}</span>`;
+    transactionsEl.appendChild(div);
+  });
+}
+
+updateBalance(); loadTransactions();
+setInterval(()=>{updateBalance();loadTransactions();},1000);
+</script>
+</body>
+</html>

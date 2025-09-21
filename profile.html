@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <style>
+    :root {
+      --main-color: #4FB7B3;
+      --bg-light: #ffffff;
+      --bg-dark: #1a1a1a;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: all 0.3s;
+    }
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.05);
+    }
+    .profile-pic {
+      display: block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: auto;
+      object-fit: cover;
+      border: 3px solid var(--main-color);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: var(--main-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: white;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      background: var(--main-color);
+      color: white;
+      border-radius: 50%;
+      padding: 10px;
+      border: none;
+    }
+    .home-btn {
+      display: inline-block;
+      margin-bottom: 15px;
+      text-decoration: none;
+      padding: 10px 15px;
+      background: var(--main-color);
+      color: white;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <a href="home.html" class="home-btn">🏠 Home</a>
+  <button class="theme-toggle" style="border: 0;size: 0px;width: 0;height: 0;background-color: var(--bg-light);" onclick="toggleTheme()"></button>
+
+  <div class="container">
+    <h2>Edit Profile</h2>
+    <img id="profilePic" src="https://via.placeholder.com/100" alt="Profile" class="profile-pic">
+    <input type="file" id="photoUpload" accept="image/*">
+    <input type="text" id="name" placeholder="Enter your name">
+    <input type="password" id="password" placeholder="Enter new password">
+    <button onclick="saveProfile()">Save Changes</button>
+    <button id="logoutBtn" style="margin-top:15px; width:100%; padding:10px; background:#ff4d4f; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">
+  Logout
+</button>
+  </div>
+
+  <script>
+    // Load saved profile
+    window.onload = function() {
+      let savedName = localStorage.getItem("profileName");
+      let savedPic = localStorage.getItem("profilePic");
+      if(savedName) document.getElementById("name").value = savedName;
+      if(savedPic) document.getElementById("profilePic").src = savedPic;
+    }
+
+    // Save profile and redirect
+    function saveProfile() {
+      let name = document.getElementById("name").value;
+      let password = document.getElementById("password").value;
+
+      if(name) localStorage.setItem("profileName", name);
+      if(password) localStorage.setItem("profilePassword", password);
+
+      alert("Profile updated! Redirecting to Home...");
+      window.location.href = "home.html"; // Go home after saving
+    }
+
+    // Handle photo upload
+    document.getElementById("photoUpload").addEventListener("change", function(e) {
+      let reader = new FileReader();
+      reader.onload = function(event) {
+        document.getElementById("profilePic").src = event.target.result;
+        localStorage.setItem("profilePic", event.target.result);
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    });
+
+    // Dark/Light Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    // Load theme on start
+    if(localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if(confirmLogout){
+      // Clear saved user data (optional)
+      localStorage.removeItem("profileName");
+      localStorage.removeItem("profilePassword");
+      localStorage.removeItem("profilePic");
+      window.location.href = "index.html"; // go to login page
+    }
+  });
+    </script>
+</body>
+</html>

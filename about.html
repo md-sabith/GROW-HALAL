@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GROW HALAL — About</title>
+  <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="1.png">
+
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+</head>
+
+<body>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logoAnim" aria-hidden>
+          <!-- animated bars logo -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 24">
+            <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#4FB7B3"/><stop offset="1" stop-color="#18A39A"/></linearGradient></defs>
+            <rect x="0" y="2" width="18" height="20" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="2;0;2" dur="1.6s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="22" y="6" width="18" height="16" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="6;2;6" dur="1.6s" begin="0.1s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="44" y="10" width="18" height="12" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="10;4;10" dur="1.6s" begin="0.2s" repeatCount="indefinite"/>
+            </rect>
+          </svg>
+        </div>
+        <div>
+          <div class="logoText">GROW HALAL</div>
+          <div class="muted" style="font-size:12px">Secure · Fast · Friendly</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <nav>
+          <a href="home.html"><ion-icon name="home-outline"></ion-icon> Home</a>
+          <a href="about.html"><ion-icon name="information-circle-outline"></ion-icon> About</a>
+          <a href="contact.html"><ion-icon name="call-outline"></ion-icon> Contact</a>
+          <a href="services.html"><ion-icon name="card-outline"></ion-icon> Services</a>
+        </nav>
+
+        <button class="menuToggle" id="menuBtn"><ion-icon name="menu-outline"></ion-icon></button>
+
+        <div class="profile">
+          <button id="themeBtn" class="icon" title="toggle theme" style="color: var(--main);border: 0;background: transparent;">
+            <ion-icon name="moon-outline" style="font-size: 23px;"></ion-icon>
+          </button>
+          <a href="profile.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)">
+            <img id="navProfilePic" src="https://via.placeholder.com/30" alt="Profile" style="width:30px;height:30px;border-radius:50%;object-fit:cover">
+            <span class="muted" id="username">Guest</span>
+          </a>
+        </div>
+      </div>
+    </header>
+    <main>
+    <h1>About GROW HALAL</h1>
+
+    <div class="section">
+      <h2>Our Mission</h2>
+      <p>To provide Shariah-compliant banking solutions that empower individuals and businesses, promoting financial
+        inclusion and ethical investment practices.</p>
+    </div>
+
+    <div class="section">
+      <h2>Our Vision</h2>
+      <p>To become the most trusted Islamic bank, delivering innovative and transparent financial services while
+        upholding Islamic values globally.</p>
+    </div>
+
+    <div class="section">
+      <h2>Our Goals</h2>
+      <ul>
+        <li>Provide ethical and interest-free financial solutions.</li>
+        <li>Promote financial literacy and responsible banking.</li>
+        <li>Support sustainable development and community growth.</li>
+        <li>Expand access to Shariah-compliant banking products.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Our Values</h2>
+      <ul>
+        <li>Integrity and Transparency</li>
+        <li>Social Responsibility</li>
+        <li>Customer-Centric Approach</li>
+        <li>Innovation in Shariah-Compliant Finance</li>
+        <li>Respect for Islamic Principles</li>
+      </ul>
+    </div>
+    <div class="mobile-nav" id="mobileNav" style="display:none">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="services.html">Services</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // mobile menu
+    document.getElementById('menuBtn').addEventListener('click', ()=>{
+      const el = document.getElementById('mobileNav');
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // theme toggle
+    document.getElementById('themeBtn').addEventListener('click', ()=>{
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if(isDark){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme','light');
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+      }
+    });
+    if(localStorage.getItem('theme') === 'dark'){
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+
+    // load profile
+    const user = JSON.parse(localStorage.getItem('mybank_user') || 'null');
+    if(user){
+      document.getElementById('username').textContent = user.name;
+      if(user.photo) document.getElementById('navProfilePic').src = user.photo;
+    }
+    
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link Bank Account</title>
+  <link rel="shortcut icon" href="1.png">
+
+<style>
+:root {
+  --main: #4FB7B3;
+  --bg: #fff;
+  --text: #071018;
+  --muted: #6b7280;
+  --card: #f7f8f9;
+  --radius: 12px;
+  --max-width: 1100px;
+  --shadow: 0 8px 30px rgba(11, 11, 11, 0.06)
+}
+
+[data-theme="dark"] {
+  --bg: #081019;
+  --text: #e8f0f1;
+  --muted: #9aa6aa;
+  --card: #0d1416;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.6)
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Roboto;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--main);
+  text-decoration: none
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px
+}
+
+/* header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.logoText {
+  font-weight: 800;
+  color: var(--main);
+  font-size: 20px;
+  letter-spacing: 1px
+}
+
+.logoAnim svg {
+  height: 34px;
+  width: auto
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+  align-items: center
+}
+
+nav a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center
+}
+
+.profile {
+  display: flex;
+  gap: 8px;
+  align-items: center
+}
+
+/* responsive menu icon */
+.menuToggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  font-size: 24px;
+  color: var(--text);
+  cursor: pointer
+}
+
+@media (max-width:800px) {
+  nav {
+    display: none
+  }
+  .muted{
+    display: none;
+  }
+
+  .menuToggle {
+    display: inline-block
+  }
+}
+
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+form input, form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--main);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #066636;
+}
+
+footer {
+  background: var(--bg);
+  color: var(--header-text);
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="wrap">
+      <div class="brand">
+        <div class="logoAnim" aria-hidden>
+          <!-- animated bars logo -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 24">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#4FB7B3" />
+                <stop offset="1" stop-color="#18A39A" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="2" width="18" height="20" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="2;0;2" dur="1.6s" repeatCount="indefinite" />
+            </rect>
+            <rect x="22" y="6" width="18" height="16" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="6;2;6" dur="1.6s" begin="0.1s" repeatCount="indefinite" />
+            </rect>
+            <rect x="44" y="10" width="18" height="12" rx="3" fill="url(#g)">
+              <animate attributeName="y" values="10;4;10" dur="1.6s" begin="0.2s" repeatCount="indefinite" />
+            </rect>
+          </svg>
+        </div>
+        <div>
+          <div class="logoText">GROW HALAL</div>
+          <div class="muted" style="font-size:12px">Secure · Fast · Friendly</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <nav>
+          <a href="home.html"><ion-icon name="home-outline"></ion-icon> Home</a>
+          <a href="about.html"><ion-icon name="information-circle-outline"></ion-icon> About</a>
+          <a href="contact.html"><ion-icon name="call-outline"></ion-icon> Contact</a>
+          <a href="services.html"><ion-icon name="card-outline"></ion-icon> Services</a>
+        </nav>
+
+        
+
+        <div class="profile">
+          <button id="themeBtn" class="icon" title="toggle theme"
+            style="color: var(--main);border: 0;background: transparent;">
+            <ion-icon name="moon-outline" style="font-size: 23px;"></ion-icon>
+          </button>
+          <a href="profile.html"
+            style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)">
+            <img id="navProfilePic" src="https://via.placeholder.com/30" alt="Profile"
+              style="width:30px;height:30px;border-radius:50%;object-fit:cover">
+            <span class="muted" id="username">Guest</span>
+          </a>
+        </div>
+        <button class="menuToggle" id="menuBtn"><ion-icon name="menu-outline"></ion-icon></button>
+      </div>
+    </header>
+
+<div class="container">
+  <form id="bankLinkForm">
+    <label for="bankName">Bank Name</label>
+    <select id="bankName" name="bankName" required>
+      <option value="">Select Bank</option>
+      <option value="hdfc">HDFC Bank</option>
+      <option value="sbi">State Bank of India</option>
+      <option value="icici">ICICI Bank</option>
+      <option value="axis">Axis Bank</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="accountHolder">Account Holder Name</label>
+    <input type="text" id="accountHolder" name="accountHolder" placeholder="Enter full name" required>
+
+    <label for="accountNumber">Account Number</label>
+    <input type="text" id="accountNumber" name="accountNumber" placeholder="Enter account number" required>
+
+    <label for="ifsc">IFSC Code</label>
+    <input type="text" id="ifsc" name="ifsc" placeholder="Enter IFSC code" required>
+
+    <label for="accountType">Account Type</label>
+    <select id="accountType" name="accountType" required>
+      <option value="">Select Account Type</option>
+      <option value="savings">Savings</option>
+      <option value="current">Current</option>
+    </select>
+
+    <button type="submit">Link Account</button>
+  </form>
+</div>
+</div>
+
+<footer>
+  <p>Ensure your details are correct. Your data is confidential and secure.</p>
+</footer>
+<div class="mobile-nav" id="mobileNav" style="display:none">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="services.html">Services</a>
+      </div>
+<script>
+document.getElementById('bankLinkForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Example: form data collection
+  const data = {
+    bankName: document.getElementById('bankName').value,
+    accountHolder: document.getElementById('accountHolder').value,
+    accountNumber: document.getElementById('accountNumber').value,
+    ifsc: document.getElementById('ifsc').value,
+    accountType: document.getElementById('accountType').value
+  };
+
+  console.log("Form Submitted:", data);
+
+  alert("Bank account linking request submitted! (This is a demo)");
+});
+</script>
+
+</body>
+</html>

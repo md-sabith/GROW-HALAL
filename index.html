@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GROW HALAL — Login</title>
+    <link rel="shortcut icon" href="1.png">
+
+
+  <!-- Ionicons (per your request) -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    :root{
+      /* theme roots - easy toggle */
+      --main: #4FB7B3;
+      --bg: #ffffff;
+      --text: #0b0b0b;
+      --muted: #666;
+      --card: #f7f7f7;
+      --accent-contrast: #ffffff;
+      --shadow: 0 6px 20px rgba(11,11,11,0.08);
+      --radius: 12px;
+      --max-width: 1100px;
+    }
+    [data-theme="dark"]{
+      --bg: #0b0f12;
+      --text: #e9eef0;
+      --muted: #b7c0c3;
+      --card: #0f1416;
+      --accent-contrast: #0b0f12;
+      --shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+
+    *{box-sizing:border-box;font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system;}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+    a{color:var(--main);text-decoration:none}
+    .container{max-width:var(--max-width);margin:0 auto;padding:28px;}
+
+    /* PRELOADER (use the SVG block you gave) */
+    section.preload{z-index:10000;height:100vh;width:100vw;display:table;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);transition:all .5s}
+    section.preload .loader{display:table-cell;vertical-align:middle;position:relative;z-index:2;text-align:center}
+    section.preload svg{max-width:200px;display:block;margin:0 auto 18px}
+    .loading-bar{max-width:360px;margin:0 auto;text-align:center;margin-top:10px}
+    .loading-bar .inner{max-width:300px;position:relative;background:var(--card);height:6px;margin:0 auto;margin-bottom:12px;border-radius:8px;overflow:hidden}
+    .loading-bar .inner .bar{background:var(--main);position:absolute;top:0;left:0;height:100%;width:0;transition:all .35s}
+    .loading-bar .text{font-size:12px;font-weight:600;letter-spacing:1px;position:relative;width:300px;margin:0 auto;text-align:center;overflow:hidden;height:16px}
+    .loading-bar .text span{display:block;opacity:0;transition:opacity .3s}
+    .loading-bar .text span.active{opacity:1}
+
+    /* page frame */
+    .auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;width:100%;max-width:920px;display:flex;gap:24px;align-items:stretch}
+    .left{flex:1;min-width:260px}
+    .right{width:360px;display:flex;flex-direction:column;gap:12px;align-items:stretch}
+
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .mark{font-weight:800;font-size:22px;color:var(--main);letter-spacing:1px}
+    .logo .sub{font-size:12px;color:var(--muted)}
+
+    .hero{font-size:20px;font-weight:700;margin-top:8px}
+    p.lead{color:var(--muted);margin-top:6px}
+
+    form label{display:block;font-weight:600;font-size:13px;margin:8px 0 6px}
+    input[type="text"], input[type="email"], input[type="password"]{
+      width:100%;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text)
+    }
+    .btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:12px 16px;border-radius:10px;background:var(--main);color:var(--accent-contrast);font-weight:700;border:0;cursor:pointer;box-shadow:var(--shadow)}
+    .subtle{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text)}
+
+    .signup-link{text-align:center;padding-top:8px}
+    .signup a{border-bottom:2px solid var(--main);padding-bottom:2px}
+
+    /* header small (mobile) */
+    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .icon-btn{background:transparent;border:0;font-size:22px;cursor:pointer;color:var(--text)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .card{flex-direction:column;align-items:stretch}
+      .right{width:100%}
+    }
+
+    @media (max-width:520px){
+      .container{padding:16px}
+      .hero{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <!-- PRELOADER -->
+  <section class="preload" id="preloader">
+    <div class="loader">
+      <img src="1.png" alt="" viewBox="0 0 167 141" aria-hidden style="width: 300px;height: auto;">
+      
+        <path id="p1" d="M 135.632 64.9278 L 135.632 131.4923 L 118.3741 131.4923 L 118.3741 64.9278 L 86.2192 64.9278 L 92.9853 48.2866 L 167 48.2866 L 167 64.9278 L 135.632 64.9278 Z"/>
+        <path id="p2" d="M 49.9415 140.9802 L 46.3717 139.547 L 103.1017 0.0197 L 106.6715 1.453 L 49.9415 140.9802 ZM 85 31 L 85.0337 31 L 85 31.083 L 85 31 Z" />
+        <path id="p3" d="M 81.6095 39.4218 L 20.5789 39.4218 C 18.5335 39.4218 17.5108 40.6088 17.5108 42.9787 L 17.5108 86.1694 C 17.5108 87.6938 18.192 88.583 19.5562 88.8371 C 19.726 88.9224 19.8958 88.9641 20.0676 88.9641 L 61.4663 88.9641 L 54.5452 105.9864 L 14.1871 105.9864 C 8.4764 105.9864 4.3436 103.6164 1.7869 98.8726 C 0.5924 96.6714 -0.0028 94.2161 -0.0028 91.5047 L -0.0028 36.7542 C -0.0028 30.9107 2.3822 26.804 7.1561 24.4321 C 9.2014 23.3325 11.5445 22.7807 14.1871 22.7807 L 88.3756 22.7807 L 81.6095 39.4218 Z"/>
+      </svg>
+
+      <div class="loading-bar">
+        <div class="inner"><div class="bar" id="bar"></div></div>
+        <div class="text">
+          <span class="active">GrowHalal running...</span>
+          <span>Logo Design</span>
+          <span>E-commerce</span>
+          <span>Social Marketing</span>
+          <span>SEO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container auth-wrap">
+    <div class="card">
+      <div class="left">
+        <div class="topbar">
+          <div class="logo">
+            <div class="mark">MY BANK</div>
+            <div class="sub">Secure · Fast · Friendly</div>
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="icon-btn" id="themeToggle" title="toggle theme">
+              <ion-icon name="moon-outline"></ion-icon>
+            </button>
+            <a href="index.html" class="icon-btn" title="Skip to main"><ion-icon name="home-outline"></ion-icon></a>
+          </div>
+        </div>
+
+        <div class="hero">Welcome back — sign in to continue</div>
+        <p class="lead">Fast, safe access to your MY BANK account. Design made clean for desktop, tablet & mobile.</p>
+
+        <div style="margin-top:18px">
+          <strong>Need help?</strong>
+          <p style="margin:8px 0 0;color:var(--muted)">Contact support@mybank.example</p>
+        </div>
+      </div>
+
+      <div class="right">
+        <form id="loginForm" onsubmit="return false;">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Enter name" required>
+
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password" required>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn" id="loginBtn"><ion-icon name="log-in-outline"></ion-icon> Login</button>
+            <a class="btn subtle" href="signup.html" id="fakeSignup"><ion-icon name="person-add-outline"></ion-icon> Sign up</a>
+          </div>
+
+          <div class="signup-link" style="margin-top:10px">
+            <small class="signup">Don't have an account? <a href="signup.html">Sign up</a></small>
+          </div>
+        </form>
+
+        <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:10px">
+          <ion-icon name="person-circle-outline" style="font-size:36px"></ion-icon>
+          <div style="text-align:left">
+            <div style="font-weight:700">Guest mode</div>
+            <div style="color:var(--muted);font-size:13px">Try demo login</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Preloader animation (vanilla)
+    (function(){
+      const pre = document.getElementById('preloader');
+      const bar = document.getElementById('bar');
+      const texts = pre.querySelectorAll('.loading-bar .text span');
+      let percent = 0;
+      let idx = 0;
+      const t = setInterval(() => {
+        percent += 20;
+        bar.style.width = percent + '%';
+        texts.forEach(s => s.classList.remove('active'));
+        texts[idx] && texts[idx].classList.add('active');
+        idx = (idx + 1) % texts.length;
+        if (percent >= 100) {
+          clearInterval(t);
+          // animate-out then remove
+          pre.classList.add('animate-out');
+          pre.style.opacity = 0;
+          setTimeout(()=> pre.style.display='none',600);
+        }
+      }, 450);
+    })();
+
+    // Theme toggle with localStorage
+    (function(){
+      const tbtn = document.getElementById('themeToggle');
+      const root = document.documentElement;
+      const saved = localStorage.getItem('theme') || 'light';
+      if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+
+      tbtn.addEventListener('click', ()=>{
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if(isDark){
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme','light');
+        } else {
+          document.documentElement.setAttribute('data-theme','dark');
+          localStorage.setItem('theme','dark');
+        }
+      });
+    })();
+
+    // Login (demo) — if name & pass present, go to index.html
+    document.getElementById('loginBtn').addEventListener('click', ()=>{
+      const name = document.getElementById('name').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if(!name || !pass){ alert('enter name & password'); return; }
+      // simulate auth, store demo user
+      localStorage.setItem('mybank_user', JSON.stringify({name}));
+      location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
